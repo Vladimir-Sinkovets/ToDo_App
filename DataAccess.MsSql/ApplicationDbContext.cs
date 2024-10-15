@@ -12,6 +12,6 @@ namespace DataAccess.MsSql
 
         public new async Task SaveChangesAsync(CancellationToken cancellationToken = default) => await base.SaveChangesAsync(cancellationToken);
 
-        public ApplicationDbContext() : base() { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
     }
 }
