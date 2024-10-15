@@ -34,5 +34,28 @@ namespace ToDoApp.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ActiveList()
+        {
+            var query = new GetToDoCollectionByStatusQuery()
+            {
+                Status = ToDoStatus.Active,
+            };
+
+            var dto = await _mediator.Send(query);
+
+            var viewModel = new ActiveListViewModel()
+            {
+                ToDos = dto.ToDos.Select(t => new ToDoViewModel()
+                {
+                    Created = t.Created,
+                    Id = t.Id,
+                    Title = t.Title,
+                })
+            };
+
+            return View(viewModel);
+        }
     }
 }
