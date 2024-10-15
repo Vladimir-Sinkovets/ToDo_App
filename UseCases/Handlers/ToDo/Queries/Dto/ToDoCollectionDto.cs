@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace UseCases.Handlers.ToDo.Queries.GetToDoCollectionByStatus
+namespace UseCases.Handlers.ToDo.Queries.Dto
 {
     public class ToDoCollectionDto
     {

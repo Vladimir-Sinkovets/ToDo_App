@@ -3,6 +3,7 @@ using MediatR;
 using ToDoApp.Entities.Enums;
 using UseCases.Enums;
 using UseCases.Extensions;
+using UseCases.Handlers.ToDo.Queries.Dto;
 
 namespace UseCases.Handlers.ToDo.Queries.GetToDoCollectionByStatus
 {
