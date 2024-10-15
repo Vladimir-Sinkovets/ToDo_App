@@ -1,6 +1,7 @@
 using DataAccess.MsSql;
 using Infrastructure.Interfaces.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using UseCases.DI;
 
 namespace ToDoApp
 {
@@ -18,6 +19,9 @@ namespace ToDoApp
             {
                 opt.UseSqlServer(connectionString);
             });
+
+            builder.Services.AddUseCases();
+
 
             var app = builder.Build();
 
