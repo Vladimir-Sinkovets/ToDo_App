@@ -1,0 +1,11 @@
+﻿@model ActiveListViewModel
+
+<ul class="list-group">
+    @foreach (var item in Model.ToDos)
+    {
+        <li class="list-group-item">
+            @item.Title, @item.Created
+        </li>
+    }
+
+</ul>
