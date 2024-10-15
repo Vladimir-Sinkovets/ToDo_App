@@ -1,3 +1,7 @@
+using DataAccess.MsSql;
+using Infrastructure.Interfaces.DataAccess;
+using Microsoft.EntityFrameworkCore;
+
 namespace ToDoApp
 {
     public class Program
@@ -7,6 +11,13 @@ namespace ToDoApp
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllersWithViews();
+
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+            builder.Services.AddDbContext<IDbContext, ApplicationDbContext>(opt =>
+            {
+                opt.UseSqlServer(connectionString);
+            });
 
             var app = builder.Build();
 
