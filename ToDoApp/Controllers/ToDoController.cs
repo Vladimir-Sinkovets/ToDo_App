@@ -4,6 +4,7 @@ using MediatR;
 using UseCases.Handlers.ToDo.Commands.CreateToDo;
 using UseCases.Handlers.ToDo.Queries.GetToDoCollectionByStatus;
 using UseCases.Enums;
+using UseCases.Handlers.ToDo.Commands.DeleteToDo;
 
 namespace ToDoApp.Controllers
 {
@@ -56,6 +57,19 @@ namespace ToDoApp.Controllers
             };
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var command = new DeleteToDoCommand()
+            {
+                ToDoId = Guid.Parse(id),
+            };
+
+            await _mediator.Send(command);
+
+            return RedirectToAction(nameof(ActiveList));
         }
     }
 }
