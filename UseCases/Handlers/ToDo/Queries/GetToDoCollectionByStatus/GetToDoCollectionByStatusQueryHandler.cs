@@ -17,8 +17,10 @@ namespace UseCases.Handlers.ToDo.Queries.GetToDoCollectionByStatus
 
         public Task<ToDoCollectionDto> Handle(GetToDoCollectionByStatusQuery request, CancellationToken cancellationToken)
         {
+            var entryStatus = request.Status.ConvertToEntry();
+
             var toDos = _dbContext.ToDos
-                .Where(t => t.Status == Status.Completed)
+                .Where(t => t.Status == entryStatus)
                 .Select(t => new ToDoDto()
                 {
                     Id = t.Id,
