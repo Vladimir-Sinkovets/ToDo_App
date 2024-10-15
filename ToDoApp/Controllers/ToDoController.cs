@@ -5,6 +5,7 @@ using UseCases.Handlers.ToDo.Commands.CreateToDo;
 using UseCases.Handlers.ToDo.Queries.GetToDoCollectionByStatus;
 using UseCases.Enums;
 using UseCases.Handlers.ToDo.Commands.DeleteToDo;
+using UseCases.Handlers.ToDo.Commands.CompleteToDo;
 
 namespace ToDoApp.Controllers
 {
@@ -70,6 +71,42 @@ namespace ToDoApp.Controllers
             await _mediator.Send(command);
 
             return RedirectToAction(nameof(ActiveList));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Complete(string id)
+        {
+            var command = new CompleteToDoCommand()
+            {
+                ToDoId = Guid.Parse(id),
+            };
+
+            await _mediator.Send(command);
+
+            return RedirectToAction(nameof(ActiveList));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CompletedList()
+        {
+            var query = new GetToDoCollectionByStatusQuery()
+            {
+                Status = ToDoStatus.Completed,
+            };
+
+            var dto = await _mediator.Send(query);
+
+            var viewModel = new CompletedListViewModel()
+            {
+                ToDos = dto.ToDos.Select(t => new ToDoViewModel()
+                {
+                    Created = t.Created,
+                    Id = t.Id,
+                    Title = t.Title,
+                })
+            };
+
+            return View(viewModel);
         }
     }
 }
