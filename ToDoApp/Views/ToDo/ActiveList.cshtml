@@ -1,5 +1,8 @@
 ﻿@model ActiveListViewModel
 
+<h3>Active:</h3>
+
+
 <ul class="list-group">
     @foreach (var item in Model.ToDos)
     {
@@ -8,6 +11,10 @@
 
             <form asp-action="Delete" asp-controller="ToDo" asp-route-id="@item.Id" method="post">
                 <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+            
+            <form asp-action="Complete" asp-controller="ToDo" asp-route-id="@item.Id" method="post">
+                <button type="submit" class="btn btn-primary">Complete</button>
             </form>
         </li>
     }
