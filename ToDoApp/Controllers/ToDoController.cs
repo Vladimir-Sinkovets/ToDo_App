@@ -8,6 +8,7 @@ using UseCases.Handlers.ToDo.Commands.DeleteToDo;
 using UseCases.Handlers.ToDo.Commands.CompleteToDo;
 using UseCases.Handlers.ToDo.Queries.GetToDoById;
 using UseCases.Handlers.ToDo.Commands.UpdateToDo;
+using UseCases.Exceptions;
 
 namespace ToDoApp.Controllers
 {
@@ -69,8 +70,18 @@ namespace ToDoApp.Controllers
             {
                 ToDoId = Guid.Parse(id),
             };
-
-            await _mediator.Send(command);
+            try
+            {
+                await _mediator.Send(command);
+            }
+            catch (ToDoNotFoundException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                throw;
+            }
 
             return RedirectToAction(nameof(ActiveList));
         }
@@ -83,7 +94,18 @@ namespace ToDoApp.Controllers
                 ToDoId = Guid.Parse(id),
             };
 
-            await _mediator.Send(command);
+            try
+            {
+                await _mediator.Send(command);
+            }
+            catch (ToDoNotFoundException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                throw;
+            }
 
             return RedirectToAction(nameof(ActiveList));
         }
@@ -119,16 +141,27 @@ namespace ToDoApp.Controllers
                 ToDoId = Guid.Parse(id),
             };
 
-            var dto = await _mediator.Send(query);
-
-            var viewModel = new EditViewModel()
+            try
             {
-                Id = dto.Id,
-                Title = dto.Title,
-                RedirectUrl = redirectUrl
-            };
+                var dto = await _mediator.Send(query);
 
-            return View(viewModel);
+                var viewModel = new EditViewModel()
+                {
+                    Id = dto.Id,
+                    Title = dto.Title,
+                    RedirectUrl = redirectUrl
+                };
+
+                return View(viewModel);
+            }
+            catch (ToDoNotFoundException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         [HttpPost]
@@ -140,7 +173,18 @@ namespace ToDoApp.Controllers
                 Title = viewModel.Title,
             };
 
-            await _mediator.Send(command);
+            try
+            {
+                await _mediator.Send(command);
+            }
+            catch (ToDoNotFoundException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                throw;
+            }
 
             return Redirect(viewModel.RedirectUrl);
         }
