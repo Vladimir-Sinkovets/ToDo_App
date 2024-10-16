@@ -7,17 +7,25 @@
     @foreach (var item in Model.ToDos)
     {
         <li class="list-group-item">
-            @item.Title, @item.Created
+            <div class="d-flex justify-content-between">
+                <div>
+                    <span>@item.Title, @item.Created</span>
+                </div>
 
-            <form asp-action="Delete" asp-controller="ToDo" asp-route-id="@item.Id" method="post">
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-            
-            <form asp-action="Complete" asp-controller="ToDo" asp-route-id="@item.Id" method="post">
-                <button type="submit" class="btn btn-primary">Complete</button>
-            </form>
+                <div class="d-flex">
 
-            <a class="btn btn-info" asp-action="Edit" asp-controller="ToDo" asp-route-id="@item.Id" asp-route-redirectUrl="@Context.Request.Path">Edit</a>
+                    <form class="form-inline mr-2" asp-action="Delete" asp-controller="ToDo" asp-route-id="@item.Id" method="post">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+
+                    <form class="form-inline mr-2" asp-action="Complete" asp-controller="ToDo" asp-route-id="@item.Id" method="post">
+                        <button type="submit" class="btn btn-primary">Complete</button>
+                    </form>
+
+                    <a class="btn btn-info" asp-action="Edit" asp-controller="ToDo" asp-route-id="@item.Id"
+                        asp-route-redirectUrl="@Context.Request.Path">Edit</a>
+                </div>
+            </div>
         </li>
     }
 
