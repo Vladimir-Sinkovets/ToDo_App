@@ -7,6 +7,7 @@ namespace Infrastructure.Interfaces.DataAccess
     {
         DbSet<ToDoEntry> ToDos { get; }
 
+        void Migrate();
         void SaveChanges();
         Task SaveChangesAsync(CancellationToken cancellationToken = default);
     }

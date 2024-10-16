@@ -42,6 +42,13 @@ namespace ToDoApp
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<IDbContext>();
+
+                dbContext.Migrate();
+            }
+
             app.Run();
         }
     }

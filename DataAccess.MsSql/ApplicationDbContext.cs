@@ -12,6 +12,8 @@ namespace DataAccess.MsSql
 
         public new async Task SaveChangesAsync(CancellationToken cancellationToken = default) => await base.SaveChangesAsync(cancellationToken);
 
+        public void Migrate() => base.Database.Migrate();
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
     }
 }
