@@ -64,7 +64,7 @@ namespace ToDoApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(string id, string redirectUrl)
         {
             var command = new DeleteToDoCommand()
             {

@@ -13,7 +13,7 @@
 
                 <div class="d-flex">
                     <form class="form-inline mr-2" asp-action="Delete" asp-controller="ToDo"
-                        asp-route-id="@item.Id" method="post">
+                          asp-route-id="@item.Id" asp-route-redirectUrl="@Context.Request.Path" method="post">
                 
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
