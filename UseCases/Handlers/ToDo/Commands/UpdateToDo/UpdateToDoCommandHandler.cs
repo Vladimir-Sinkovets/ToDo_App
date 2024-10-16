@@ -1,6 +1,5 @@
 ﻿using Infrastructure.Interfaces.DataAccess;
 using MediatR;
-using ToDoApp.Entities.Enums;
 using UseCases.Exceptions;
 using UseCases.Extensions;
 
@@ -23,7 +22,6 @@ namespace UseCases.Handlers.ToDo.Commands.UpdateToDo
                 throw new ToDoNotFoundException($"ToDo with id = {request.ToDoId} does not exist");
 
             toDoEntry.Title = request.Title;
-            toDoEntry.Status = request.Status.ConvertToEntry();
 
             await _dbContext.SaveChangesAsync();
         }

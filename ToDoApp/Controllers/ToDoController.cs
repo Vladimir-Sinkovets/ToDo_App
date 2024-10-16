@@ -6,6 +6,8 @@ using UseCases.Handlers.ToDo.Queries.GetToDoCollectionByStatus;
 using UseCases.Enums;
 using UseCases.Handlers.ToDo.Commands.DeleteToDo;
 using UseCases.Handlers.ToDo.Commands.CompleteToDo;
+using UseCases.Handlers.ToDo.Queries.GetToDoById;
+using UseCases.Handlers.ToDo.Commands.UpdateToDo;
 
 namespace ToDoApp.Controllers
 {
@@ -107,6 +109,40 @@ namespace ToDoApp.Controllers
             };
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id, string redirectUrl)
+        {
+            var query = new GetToDoByIdQuery()
+            {
+                ToDoId = Guid.Parse(id),
+            };
+
+            var dto = await _mediator.Send(query);
+
+            var viewModel = new EditViewModel()
+            {
+                Id = dto.Id,
+                Title = dto.Title,
+                RedirectUrl = redirectUrl
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditViewModel viewModel)
+        {
+            var command = new UpdateToDoCommand()
+            {
+                ToDoId = viewModel.Id,
+                Title = viewModel.Title,
+            };
+
+            await _mediator.Send(command);
+
+            return Redirect(viewModel.RedirectUrl);
         }
     }
 }

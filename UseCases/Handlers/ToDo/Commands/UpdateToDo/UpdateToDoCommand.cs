@@ -7,6 +7,5 @@ namespace UseCases.Handlers.ToDo.Commands.UpdateToDo
     {
         public Guid ToDoId { get; set; }
         public string Title { get; set; }
-        public ToDoStatus Status { get; set; }
     }
 }

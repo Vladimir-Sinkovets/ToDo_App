@@ -8,7 +8,9 @@
         <li class="list-group-item">
             <span class="text-light bg-info rounded">@item.Title, @item.Created</span>
 
-            <form asp-action="Delete" asp-controller="ToDo" asp-route-id="@item.Id" method="post">
+            <form asp-action="Delete" asp-controller="ToDo"
+                asp-route-id="@item.Id" method="post">
+                
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
         </li>

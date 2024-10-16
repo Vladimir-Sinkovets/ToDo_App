@@ -1,0 +1,9 @@
+﻿@model EditViewModel
+
+<form asp-action="Edit" asp-controller="ToDo" method="post">
+    <input hidden asp-for="RedirectUrl" />
+    <input hidden asp-for="Id" value="@Model.Id" />
+    <input type="text" asp-for="Title" />
+
+    <input type="submit"/>
+</form>
