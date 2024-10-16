@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using ToDoApp.ViewModels;
-using MediatR;
-using UseCases.Handlers.ToDo.Commands.CreateToDo;
-using UseCases.Handlers.ToDo.Queries.GetToDoCollectionByStatus;
 using UseCases.Enums;
-using UseCases.Handlers.ToDo.Commands.DeleteToDo;
-using UseCases.Handlers.ToDo.Commands.CompleteToDo;
-using UseCases.Handlers.ToDo.Queries.GetToDoById;
-using UseCases.Handlers.ToDo.Commands.UpdateToDo;
 using UseCases.Exceptions;
+using UseCases.Handlers.ToDo.Commands.CompleteToDo;
+using UseCases.Handlers.ToDo.Commands.CreateToDo;
+using UseCases.Handlers.ToDo.Commands.DeleteToDo;
+using UseCases.Handlers.ToDo.Commands.UpdateToDo;
+using UseCases.Handlers.ToDo.Queries.GetToDoById;
+using UseCases.Handlers.ToDo.Queries.GetToDoCollectionByStatus;
 
 namespace ToDoApp.Controllers
 {
@@ -30,6 +30,9 @@ namespace ToDoApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddViewModel viewModel)
         {
+            if (ModelState.IsValid == false)
+                return View(viewModel);
+
             var command = new CreateToDoCommand()
             {
                 Title = viewModel.Title,
@@ -83,7 +86,7 @@ namespace ToDoApp.Controllers
                 throw;
             }
 
-            return RedirectToAction(nameof(ActiveList));
+            return Redirect(redirectUrl);
         }
 
         [HttpPost]
@@ -167,6 +170,9 @@ namespace ToDoApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditViewModel viewModel)
         {
+            if (ModelState.IsValid == false)
+                return View(viewModel);
+
             var command = new UpdateToDoCommand()
             {
                 ToDoId = viewModel.Id,
